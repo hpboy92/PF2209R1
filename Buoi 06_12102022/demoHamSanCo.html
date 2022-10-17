@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Hàm Sẵn Có</title>
+</head>
+<body>
+     <script>
+        function xuLyHoiTen() {
+            let traLoi = prompt('Điền Họ và Tên');
+            alert('Xin chào bạn ' + traLoi);
+        }
+        
+        function xacNhanThongTin() {
+            let traLoi=confirm('Bạn Có Hiểu Bài Không?');
+            alert('Câu Trả Lời Của Bạn Là: '+ traLoi);
+        }
+    </script>
+    <input type="button" onclick="xacNhanThongTin()" value="Hỏi Đáp" />
+    <input type="button" onclick="alert('Xin Chào Các Bạn')" value="Click Here" />
+    <input type="button" onclick="xuLyHoiTen()" value="Hỏi Tên" />   
+</body>
+</html>
