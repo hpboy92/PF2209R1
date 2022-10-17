@@ -8,11 +8,12 @@
 </head>
 <body>
      <script>
+        // camelCase set name rule
         function xuLyHoiTen() {
             let traLoi = prompt('Điền Họ và Tên');
             alert('Xin chào bạn ' + traLoi);
         }
-        
+
         function xacNhanThongTin() {
             let traLoi=confirm('Bạn Có Hiểu Bài Không?');
             alert('Câu Trả Lời Của Bạn Là: '+ traLoi);
@@ -20,6 +21,11 @@
     </script>
     <input type="button" onclick="xacNhanThongTin()" value="Hỏi Đáp" />
     <input type="button" onclick="alert('Xin Chào Các Bạn')" value="Click Here" />
-    <input type="button" onclick="xuLyHoiTen()" value="Hỏi Tên" />   
+    <input type="button" onclick="xuLyHoiTen()" value="Hỏi Tên" />
+    <br> 
 </body>
+<script>
+    console.log('Đây Là Kết Thúc Trang');
+    document.write('TEST NÚT');
+</script>
 </html>
