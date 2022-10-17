@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChangeBgColor</title>
+</head>
+<body id="body">
+    <script>
+        function changeBlue(){
+            document.getElementById("body").style.backgroundColor="Blue";
+        }
+        function doiMau(colorName){
+            document.getElementById("body").style.backgroundColor=colorName;
+
+        }
+    </script>
+    
+    <input type="button" id="btnBlue" value="Blue" onclick="changeBlue()"/>
+    <input type="button" id="btnRed" value="Red" onclick="doiMau('Red')" />
+    <input type="button" id="btnGreen" value="Green" onclick="doiMau('Green')" />
+</body>
+</html>
