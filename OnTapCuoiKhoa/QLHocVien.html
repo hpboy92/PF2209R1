@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Quản Lý Học Viên</h2>
+
+    <fieldset>
+      <legend>Thêm thông tin học viên</legend>
+      <table>
+        <tr>
+          <td>Họ tên</td>
+          <td><input type="text" id="hoTen" /></td>
+        </tr>
+        <tr>
+          <td>Số điện thoại</td>
+          <td><input type="text" id="soDienThoai" /></td>
+        </tr>
+        <tr>
+          <td>Điểm</td>
+          <td><input type="number" id="diem" min="0" max="10" /></td>
+        </tr>
+        <tr>
+          <td>Giới tính</td>
+          <td>
+            <input
+              type="radio"
+              name="gioiTinh"
+              checked
+              value="0"
+              id="gtNam"
+            />Nam <input type="radio" name="gioiTinh" value="1" id="gtNu" />Nữ
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" align="right">
+            <button type="button" onclick="themHocVien()">Thêm</button>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
+    <br />
+    <fieldset>
+      <legend>Danh sách học viên</legend>
+      <p>
+        <button type="button" onclick="hienThiDanhSachHocVien()">
+          Lấy dữ liệu
+        </button>
+      </p>
+      <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Họ tên</th>
+            <th>Số Điện Thoại</th>
+            <th>Điểm</th>
+            <!-- <th>Giới tính</th> -->
+          </tr>
+        </thead>
+        <tbody id="ketQua"></tbody>
+      </table>
+    </fieldset>
+
+    <script>
+      class HocVien {
+        constructor() {}
+
+        datTen(hoTen) {
+          this.hoTen = hoTen;
+        }
+
+        datSoDienThoai(soDienThoai) {
+          this.soDienThoai = soDienThoai;
+        }
+
+        datGioiTinh(gioiTinh) {
+          this.gioiTinh = gioiTinh;
+        }
+
+        datDiem(diem) {
+          this.diem = diem;
+        }
+      }
+
+      const DS_HOC_VIEN_KEY = "dsHocVien";
+
+      // Tạo hàm đọc danh sách học viên từ localStorage
+      function layDanhSachHocVienTuLocalStorage() {
+        try {
+          let dsHocVien = localStorage.getItem(DS_HOC_VIEN_KEY);
+          if (dsHocVien === null) {
+            return [];
+          } else {
+            return JSON.parse(dsHocVien);
+          }
+        } catch (e) {
+          console.log(e);
+          return [];
+        }
+      }
+
+      // Thêm thông tin học viên
+
+      function themHocVien() {
+        // Tạo đối tượng học viên
+        let hocVienMoi = new HocVien();
+        hocVienMoi.datTen(document.getElementById("hoTen").value);
+        hocVienMoi.datSoDienThoai(document.getElementById("soDienThoai").value);
+        // hocVienMoi.datGioiTinh(document.getElementById());
+        hocVienMoi.datDiem(parseFloat(document.getElementById("diem").value));
+
+        // Lấy danh sách học viên từ localStorage
+        let dsHocVien = layDanhSachHocVienTuLocalStorage();
+
+        // Thêm vào mảng học viên
+        for (let idx in dsHocVien) {
+          if (hocVienMoi.soDienThoai == dsHocVien[0].soDienThoai) {
+            alert("Học viên đã tồn tại.");
+            return;
+          }
+        }
+        dsHocVien.push(hocVienMoi);
+
+        // ghi mảng học viên vào localStorage
+        localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
+
+        console.log(hocVienMoi, dsHocVien);
+      }
+
+      function docThongTinHocVien() {}
+
+      // Hiển thị ra kết quả
+      function hienThiDanhSachHocVien() {
+        //Lấy ds học viên từ localStorage
+        let dsHocVien = layDanhSachHocVienTuLocalStorage();
+        for (let i = 0; i < dsHocVien.length; i++) {
+          let dong = document.createElement("tr");
+          let cot_STT = document.createElement("td");
+          cot_STT.innerHTML = i + 1;
+          let cot_hoTen = document.createElement("td");
+          cot_hoTen.innerHTML = dsHocVien[i].hoTen;
+          let cot_soDienThoai = document.createElement("td");
+          cot_soDienThoai.innerHTML = dsHocVien[i].soDienThoai;
+          let cot_diem = document.createElement("td");
+          cot_diem.innerHTML = dsHocVien[i].diem;
+          dong.appendChild(cot_STT);
+          dong.appendChild(cot_hoTen);
+          dong.appendChild(cot_soDienThoai);
+          dong.appendChild(cot_diem);
+          document.getElementById("ketQua").appendChild(dong);
+        }
+      }
+    </script>
+  </body>
+</html>
