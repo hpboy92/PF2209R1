@@ -9,9 +9,9 @@
   <body>
     <h2>Quản Lý Học Viên</h2>
 
-    <fieldset>
-      <legend>Thêm thông tin học viên</legend>
-      <table>
+    <fieldset style="width: 600px">
+      <legend><b>Thêm thông tin học viên</b></legend>
+      <table cellpadding="5" cellspacing="0">
         <tr>
           <td>Họ tên</td>
           <td><input type="text" id="hoTen" /></td>
@@ -27,13 +27,8 @@
         <tr>
           <td>Giới tính</td>
           <td>
-            <input
-              type="radio"
-              name="gioiTinh"
-              checked
-              value="0"
-              id="gtNam"
-            />Nam <input type="radio" name="gioiTinh" value="1" id="gtNu" />Nữ
+            <input type="radio" name="gioiTinh" checked value="Nam" />Nam
+            <input type="radio" name="gioiTinh" value="Nữ" />Nữ
           </td>
         </tr>
         <tr>
@@ -44,21 +39,21 @@
       </table>
     </fieldset>
     <br />
-    <fieldset>
-      <legend>Danh sách học viên</legend>
+    <fieldset style="width: 600px">
+      <legend><b>Danh sách học viên</b></legend>
       <p>
         <button type="button" onclick="hienThiDanhSachHocVien()">
           Lấy dữ liệu
         </button>
       </p>
-      <table border="1" cellpadding="5" cellspacing="0">
+      <table border="1" cellpadding="8" cellspacing="0">
         <thead>
           <tr>
             <th>STT</th>
             <th>Họ tên</th>
             <th>Số Điện Thoại</th>
             <th>Điểm</th>
-            <!-- <th>Giới tính</th> -->
+            <th>Giới tính</th>
           </tr>
         </thead>
         <tbody id="ketQua"></tbody>
@@ -110,7 +105,7 @@
         let hocVienMoi = new HocVien();
         hocVienMoi.datTen(document.getElementById("hoTen").value);
         hocVienMoi.datSoDienThoai(document.getElementById("soDienThoai").value);
-        // hocVienMoi.datGioiTinh(document.getElementById());
+        hocVienMoi.datGioiTinh(xuLyGioiTinh());
         hocVienMoi.datDiem(parseFloat(document.getElementById("diem").value));
 
         // Lấy danh sách học viên từ localStorage
@@ -118,7 +113,8 @@
 
         // Thêm vào mảng học viên
         for (let idx in dsHocVien) {
-          if (hocVienMoi.soDienThoai == dsHocVien[0].soDienThoai) {
+          console.log(hocVienMoi.soDienThoai, dsHocVien[idx].soDienThoai, idx);
+          if (hocVienMoi.soDienThoai === dsHocVien[idx].soDienThoai) {
             alert("Học viên đã tồn tại.");
             return;
           }
@@ -128,30 +124,48 @@
         // ghi mảng học viên vào localStorage
         localStorage.setItem(DS_HOC_VIEN_KEY, JSON.stringify(dsHocVien));
 
-        console.log(hocVienMoi, dsHocVien);
+        console.log(dsHocVien);
       }
 
       function docThongTinHocVien() {}
 
       // Hiển thị ra kết quả
       function hienThiDanhSachHocVien() {
+        document.getElementById("ketQua").innerHTML = "";
         //Lấy ds học viên từ localStorage
         let dsHocVien = layDanhSachHocVienTuLocalStorage();
         for (let i = 0; i < dsHocVien.length; i++) {
           let dong = document.createElement("tr");
           let cot_STT = document.createElement("td");
+          cot_STT.align = "center";
           cot_STT.innerHTML = i + 1;
           let cot_hoTen = document.createElement("td");
           cot_hoTen.innerHTML = dsHocVien[i].hoTen;
           let cot_soDienThoai = document.createElement("td");
           cot_soDienThoai.innerHTML = dsHocVien[i].soDienThoai;
           let cot_diem = document.createElement("td");
+          cot_diem.align = "center";
           cot_diem.innerHTML = dsHocVien[i].diem;
+          let cot_gioiTinh = document.createElement("td");
+          cot_gioiTinh.align = "center";
+          cot_gioiTinh.innerHTML = dsHocVien[i].gioiTinh;
+
           dong.appendChild(cot_STT);
           dong.appendChild(cot_hoTen);
           dong.appendChild(cot_soDienThoai);
           dong.appendChild(cot_diem);
+          dong.appendChild(cot_gioiTinh);
           document.getElementById("ketQua").appendChild(dong);
+        }
+      }
+
+      // xử lý giới tính
+      function xuLyGioiTinh() {
+        let mangGioiTinh = document.getElementsByName("gioiTinh");
+        for (i = 0; i < mangGioiTinh.length; i++) {
+          if (mangGioiTinh[i].checked) {
+            return mangGioiTinh[i].value;
+          }
         }
       }
     </script>
